@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { Box, TextField, Button, Typography, Container, Alert } from '@mui/material';
+import { Box, TextField, Button, Typography, Container, Alert, Paper } from '@mui/material';
 import { signInWithGoogle } from '../auth/googleAuth';
+import GoogleIcon from '@mui/icons-material/Google';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -37,26 +38,18 @@ export default function Login() {
       }
   };
 
-  // En tu JSX, agrega el botón de Google:
-  <Button
-      variant="contained"
-      color="primary"
-      onClick={handleGoogleSignIn}
-      startIcon={<GoogleIcon />}
-  >
-      Iniciar sesión con Google
-  </Button>
+
 
   return (
     <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
+      <Paper elevation={3} sx={{ p: 4, mt: 8, backgroundColor: 'white' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
         <Typography component="h1" variant="h5">
           Iniciar Sesión
         </Typography>
@@ -102,8 +95,17 @@ export default function Login() {
           >
             ¿No tienes una cuenta? Regístrate
           </Button>
+          <Button
+            fullWidth
+            variant="contained"
+            onClick={handleGoogleSignIn}
+            startIcon={<GoogleIcon />}
+            sx={{ mt: 2, mb: 2, backgroundColor: '#4285f4', '&:hover': { backgroundColor: '#357ae8' } }}
+          >
+            Iniciar sesión con Google
+          </Button>
         </Box>
-      </Box>
+      </Paper>
     </Container>
   );
 }
