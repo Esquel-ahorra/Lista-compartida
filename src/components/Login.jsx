@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Box, TextField, Button, Typography, Container, Alert } from '@mui/material';
+import { signInWithGoogle } from '../auth/googleAuth';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -24,6 +25,27 @@ export default function Login() {
     }
     setLoading(false);
   }
+
+  const handleGoogleSignIn = async () => {
+      try {
+          await signInWithGoogle();
+          // Redirigir al usuario después del inicio de sesión exitoso
+          navigate('/dashboard');
+      } catch (error) {
+          console.error("Error en el inicio de sesión con Google:", error);
+          // Manejar el error apropiadamente
+      }
+  };
+
+  // En tu JSX, agrega el botón de Google:
+  <Button
+      variant="contained"
+      color="primary"
+      onClick={handleGoogleSignIn}
+      startIcon={<GoogleIcon />}
+  >
+      Iniciar sesión con Google
+  </Button>
 
   return (
     <Container component="main" maxWidth="xs">
