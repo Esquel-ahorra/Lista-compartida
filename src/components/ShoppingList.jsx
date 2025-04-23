@@ -49,7 +49,7 @@ const ShoppingList = memo(function ShoppingList() {
     } catch (error) {
       console.error('Error al cargar las listas:', error);
     }
-  }
+  }, [currentUser])
 
   const handleAddItem = useCallback(async () => {
     if (!newItemName.trim()) return;
@@ -69,7 +69,7 @@ const ShoppingList = memo(function ShoppingList() {
     } catch (error) {
       console.error('Error al añadir item:', error);
     }
-  }
+  }, [newItemName, currentUser, lists])
 
   const handleDeleteList = useCallback(async (listId) => {
     try {
@@ -78,20 +78,20 @@ const ShoppingList = memo(function ShoppingList() {
     } catch (error) {
       console.error('Error al eliminar la lista:', error);
     }
-  }
+  }, [lists])
 
   const handleShare = useCallback((list) => {
     setSelectedList(list);
     const shareLink = `${window.location.origin}/shared/${list.id}`;
     setShareUrl(shareLink);
     setOpenShareDialog(true);
-  }
+  }, [])
 
   const handleCopyLink = useCallback(() => {
     navigator.clipboard.writeText(shareUrl);
     setOpenShareDialog(false);
     setSnackbarOpen(true);
-  }
+  }, [shareUrl])
 
   return (
     <Box sx={{ maxWidth: 600, mx: 'auto', p: 2 }}>
