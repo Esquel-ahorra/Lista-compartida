@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, memo } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../firebase/config';
 import { collection, addDoc, query, where, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firestore';
@@ -22,7 +22,7 @@ import {
 } from '@mui/material';
 import { Delete, Share, Add, Edit } from '@mui/icons-material';
 
-export default function ShoppingList() {
+const ShoppingList = memo(function ShoppingList() {
   const [lists, setLists] = useState([]);
   const [newItemName, setNewItemName] = useState('');
   const [selectedList, setSelectedList] = useState(null);
@@ -37,7 +37,7 @@ export default function ShoppingList() {
     }
   }, [currentUser]);
 
-  async function loadLists() {
+  const loadLists = useCallback(async () => {
     try {
       const q = query(collection(db, 'lists'), where('userId', '==', currentUser.uid));
       const querySnapshot = await getDocs(q);
@@ -51,7 +51,7 @@ export default function ShoppingList() {
     }
   }
 
-  async function handleAddItem() {
+  const handleAddItem = useCallback(async () => {
     if (!newItemName.trim()) return;
 
     try {
@@ -71,7 +71,7 @@ export default function ShoppingList() {
     }
   }
 
-  async function handleDeleteList(listId) {
+  const handleDeleteList = useCallback(async (listId) => {
     try {
       await deleteDoc(doc(db, 'lists', listId));
       setLists(lists.filter(list => list.id !== listId));
@@ -80,14 +80,14 @@ export default function ShoppingList() {
     }
   }
 
-  function handleShare(list) {
+  const handleShare = useCallback((list) => {
     setSelectedList(list);
     const shareLink = `${window.location.origin}/shared/${list.id}`;
     setShareUrl(shareLink);
     setOpenShareDialog(true);
   }
 
-  function handleCopyLink() {
+  const handleCopyLink = useCallback(() => {
     navigator.clipboard.writeText(shareUrl);
     setOpenShareDialog(false);
     setSnackbarOpen(true);
@@ -162,4 +162,6 @@ export default function ShoppingList() {
       />
     </Box>
   );
-}
+});
+
+export default ShoppingList;
