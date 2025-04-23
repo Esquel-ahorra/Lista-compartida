@@ -41,69 +41,71 @@ export default function Login() {
 
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Paper elevation={3} sx={{ p: 4, mt: 8, backgroundColor: 'white' }}>
+    <Container component="main" maxWidth="xs" sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', py: 4 }}>
+      <Paper elevation={3} sx={{ p: 4, width: '100%', bgcolor: '#ffffff', borderRadius: 2 }}>
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            width: '100%'
           }}
         >
-        <Typography component="h1" variant="h5">
-          Iniciar Sesión
-        </Typography>
-        {error && <Alert severity="error">{error}</Alert>}
-        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Correo Electrónico"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Contraseña"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            disabled={loading}
-          >
+          <Typography component="h1" variant="h5">
             Iniciar Sesión
-          </Button>
-          <Button
-            fullWidth
-            variant="text"
-            onClick={() => navigate('/signup')}
-          >
-            ¿No tienes una cuenta? Regístrate
-          </Button>
-          <Button
-            fullWidth
-            variant="contained"
-            onClick={handleGoogleSignIn}
-            startIcon={<GoogleIcon />}
-            sx={{ mt: 2, mb: 2, backgroundColor: '#4285f4', '&:hover': { backgroundColor: '#357ae8' } }}
-          >
-            Iniciar sesión con Google
-          </Button>
+          </Typography>
+          {error && <Alert severity="error">{error}</Alert>}
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Correo Electrónico"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Contraseña"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              disabled={loading}
+            >
+              Iniciar Sesión
+            </Button>
+            <Button
+              fullWidth
+              variant="text"
+              onClick={() => navigate('/signup')}
+            >
+              ¿No tienes una cuenta? Regístrate
+            </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              onClick={handleGoogleSignIn}
+              startIcon={<GoogleIcon />}
+              sx={{ mt: 2, mb: 2, backgroundColor: '#4285f4', '&:hover': { backgroundColor: '#357ae8' } }}
+            >
+              Iniciar sesión con Google
+            </Button>
+          </Box>
         </Box>
       </Paper>
     </Container>
